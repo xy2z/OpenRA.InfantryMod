@@ -1,0 +1,118 @@
+Player:
+	PlayerResources:
+		SelectableCash: 500, 1000, 1500, 2000, 2500, 6000, 7500, 10000
+		DefaultCash: 1000
+	Shroud:
+		FogEnabled: True
+		ExploredMapEnabled: True
+
+World:
+	LuaScript:
+		Scripts: infantry-mod.lua
+	MissionData:
+		Briefing: This is a modded map only with infantry, no MCV.\nCapture oil derricks to gain ressources and win.\nRemember to set your teams!
+	MPStartUnits@mcvonly:
+		Class: none
+		ClassName: Barracks
+		Factions: allies, england, france, germany
+		BaseActor: tent
+	-MPStartUnits@lightallies:
+	-MPStartUnits@lightsoviet:
+	-MPStartUnits@heavyallies:
+	-MPStartUnits@heavysoviet:
+	CrateSpawner:
+		Enabled: False
+		Locked: True
+	MapOptions:
+		TechLevel: infantryonly
+		TechLevelLocked: True
+
+E4:
+	Tooltip:
+		Name: Flamethrower
+	Buildable:
+		Prerequisites: ~tent
+
+SHOK:
+	Tooltip:
+		Name: Shock Trooper
+	Buildable:
+		Prerequisites: tent
+
+SPY:
+	Buildable:
+		Prerequisites: ~barr
+
+SPY.England:
+	Buildable:
+		Prerequisites: ~tent
+
+
+OILB:
+	Health:
+		HP: 20000
+	CashTrickler:
+		Period: 400
+		Amount: 25
+		CaptureAmount: 50
+
+TENT:
+	Power:
+		Amount: 2500
+	CashTrickler:
+		Period: 350
+		Amount: 100
+		ShowTicks: True
+	ProvidesRadar:
+	-Sellable:
+	Health:
+		HP: 8000
+	AirstrikePower@spyplane:
+		OrderName: SovietSpyPlane
+		Prerequisites: tent
+		Icon: spyplane
+		ChargeTime: 72
+		Description: Spy Plane
+		LongDesc: Reveals an area of the map\nand cloaked enemy units.
+		SelectTargetSpeechNotification: SelectTarget
+		EndChargeSpeechNotification: SpyPlaneReady
+		CameraActor: camera.spyplane
+		CameraRemoveDelay: 150
+		UnitType: u2
+		QuantizedFacings: 8
+		DisplayBeacon: true
+		BeaconPoster: camicon
+	ParatroopersPower@paratroopers:
+		OrderName: SovietParatroopers
+		Prerequisites: tent
+		Icon: paratroopers
+		ChargeTime: 216
+		Description: Paratroopers
+		LongDesc: A Badger drops a squad of infantry\nanywhere on the map.
+		DropItems: E1,E1,E1,E3,E3
+		SelectTargetSpeechNotification: SelectTarget
+		AllowImpassableCells: false
+		QuantizedFacings: 8
+		CameraActor: camera.paradrop
+		DisplayBeacon: true
+		BeaconPoster: pinficon
+	AirstrikePower@parabombs:
+		OrderName: UkraineParabombs
+		Prerequisites: tent
+		Icon: parabombs
+		ChargeTime: 180
+		Description: Parabombs
+		LongDesc: A squad of Badgers drops parachuted\nbombs on your target.
+		SelectTargetSpeechNotification: SelectTarget
+		CameraActor: camera
+		CameraRemoveDelay: 150
+		UnitType: badr.bomber
+		QuantizedFacings: 8
+		DisplayBeacon: true
+		BeaconPoster: pbmbicon
+		SquadSize: 3
+		SquadOffset: 1792,1792,0
+
+PBOX:
+	Health:
+		HP: 4000
