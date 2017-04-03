@@ -35,15 +35,14 @@ Code here.
 1. Zip your map including the `infantry-rules.yaml` and `infantrymod.lua`
 1. Play
 
-Having troubles? Get help here. Link
+Doesn't work? [Get help here](https://github.com/xy2z/OpenRA.InfantryMod/wiki/Troubleshooting)
 
-Remember to add your map to the resource center (link)  with the tag "Infantry". Remember to add a screenshot.
-Remember to check in on new releases to the mod and update your map with fixes and new features.
+__Remember to__
+- add your map to the resource center (link) with the tag "Infantry".
+- check in on new releases to the mod and update your map with fixes and new features.
 
 ## Contribute
 Feel free to submit a pull request.
 
 ## Bugs & Features 
-Found a bug?
-Got a great idea for a feature ? 
-Create an issue here.
+Found a bug? Got a great idea for a feature ? [Create an issue here](https://github.com/xy2z/OpenRA.InfantryMod/issues/new).
