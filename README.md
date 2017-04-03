@@ -5,12 +5,12 @@ Catch me on Discord, in game, forums or email. Thanks.
 
 ## About
 (See a video on YouTube)
-This is a mod for *maps* in OpenRA (link): Red Alert.
+This is a mod for __maps__ in [OpenRA](http://www.openra.net): Red Alert.
 Only infantry is available in this mod, along with a couple super weapons such as paradrops.
 
-All infantry is available for all players. The goal is to capture and control as many oil derricks as possible.
+All infantry is available. The goal is to capture and control as many oil derricks as possible.
 
-It's only tested on version 201610xx.
+It's only tested on version 20161019.
 
 ## Maps
 See a list of all infantry mod maps on the resource center (link).
@@ -21,6 +21,8 @@ See a list of all infantry mod maps on the resource center (link).
 - Barracks health is set to XX (XX original)
 - Oil derricks health is 4x higher than default? 
 - Super Weapons: parabombs, paradrops and spy plane.
+- First team to get XX points wins.
+
 
 ## Make your own map
 This mod is very simple to add to your own map.
