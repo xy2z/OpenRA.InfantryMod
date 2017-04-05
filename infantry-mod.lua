@@ -7,7 +7,7 @@
 
 
 -- Variables
-points_to_win
+points_to_win = 0
 count_tick = 0
 players = nil
 teams = {}
