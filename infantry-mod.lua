@@ -1,12 +1,13 @@
 -- OpenRA: Red Alert - InfantryMod v1.0.0-beta.1
 -- Created by xy - March 2017
+-- Check for new releases on https://github.com/xy2z/OpenRA.InfantryMod
 --
 -- Feel free to make your own InfantryMod map,
 -- just add the rules.yaml and infantry-mod.lua files to your map.
 
 
 -- Variables
-points_to_win = 10
+points_to_win
 count_tick = 0
 players = nil
 teams = {}
