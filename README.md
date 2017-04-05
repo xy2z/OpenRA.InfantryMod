@@ -3,7 +3,6 @@
 This mod is currently in BETA - please send some feedback to me if you're testing it.
 Catch me on Discord, in game, forums or email. Thanks.
 
-
 ## About
 (See a video on YouTube)
 This is a mod for __maps__ in [OpenRA](http://www.openra.net): Red Alert.
@@ -30,8 +29,8 @@ See a list of all infantry mod maps on the resource center (link).
 ## Make your own map
 This mod is very simple to add to your own map.
 1. Create a map with oil derricks
-1. Change the type to Infantry in map.yaml.
-1. Add this code to the bottom of your map.yaml file
+1. Set the `Categories` to `Infantry` in `map.yaml`.
+1. Add this code to the bottom of your `map.yaml` file
 ```
 CODE HERE.
 ```
