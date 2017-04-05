@@ -26,11 +26,7 @@ team2_controls = 0
 team2_points = 0.0
 
 -- Variables for Oil derricks
-all_oil_derricks = { Actor11, Actor15, Actor18, Actor19, Actor20, Actor32, Actor38 }
-count_oil_derricks = 0
-for key, oil in pairs(all_oil_derricks) do
-	count_oil_derricks = count_oil_derricks + 1
-end
+all_oil_derricks = {}
 
 -- Custom functions
 function set_winner_team(team_id)
@@ -74,6 +70,17 @@ WorldLoaded = function()
 	Media.DisplayMessage("Get points by capturing and controlling oil derricks.")
 
 	-- Media.DisplayMessage("Debug: Found " .. count_oil_derricks .. " oil derricks")
+
+	-- Get all oil derricks
+	neutral_player = Player.GetPlayer('Neutral')
+	all_oil_derricks = neutral_player.GetActorsByType('oilb')
+	-- all_oil_derricks = { Actor11, Actor15, Actor18, Actor19, Actor20, Actor32, Actor38 }
+	count_oil_derricks = 0
+	-- for key, oil in pairs(all_oil_derricks) do
+	Utils.Do(all_oil_derricks, function(actor)
+		Media.DisplayMessage("Found oil derrick")
+		count_oil_derricks = count_oil_derricks + 1
+	end)
 
 	-- Count players. Because if there's only 2 players teams doesn't need to be set.
 	for key, player in pairs(players) do
@@ -123,20 +130,20 @@ WorldLoaded = function()
 					-- Set Team ID's
 					if Team1ID == nil then
 						Team1ID = player.Team
-						Media.DisplayMessage("Debug: Set Team1ID to " .. player.Team)
+						-- Media.DisplayMessage("Debug: Set Team1ID to " .. player.Team)
 					else
 						Team2ID = player.Team
-						Media.DisplayMessage("Debug: Set Team2ID to " .. player.Team)
+						-- Media.DisplayMessage("Debug: Set Team2ID to " .. player.Team)
 					end
 				end
 
 				-- Add team players
 				if player.Team == Team1ID then
 					Team1Players[player.InternalName] = player
-					Media.DisplayMessage("Debug: Team1Players: " .. player.Name)
+					-- Media.DisplayMessage("Debug: Team1Players: " .. player.Name)
 				elseif player.Team == Team2ID then
 					Team2Players[player.InternalName] = player
-					Media.DisplayMessage("Debug: Team2Players: " .. player.Name)
+					-- Media.DisplayMessage("Debug: Team2Players: " .. player.Name)
 				end
 			end
 		end
@@ -148,11 +155,11 @@ WorldLoaded = function()
 
 		-- Fix if no teams are set (so script doesn't crash)
 		if Team1ID == nil then
-			Media.DisplayMessage("Debug: Set Team1ID to 1 (was nil)")
+			-- Media.DisplayMessage("Debug: Set Team1ID to 1 (was nil)")
 			Team1ID = 1
 		end
 		if Team2ID == nil then
-			Media.DisplayMessage("Debug: Set Team1ID to 2 (was nil)")
+			-- Media.DisplayMessage("Debug: Set Team1ID to 2 (was nil)")
 			Team2ID = 2
 		end
 	end
@@ -160,16 +167,17 @@ WorldLoaded = function()
 	-- Show how many points it takes to win.
 	points_to_win = count_players * 15
 	if count_players == 2 then
-		Media.DisplayMessage("The first player that gets " .. points_to_win .. " points wins! ")
+		Media.DisplayMessage("The first player to get " .. points_to_win .. " points wins! ")
 	else
-		Media.DisplayMessage("The first team that gets " .. points_to_win .. " points wins! ")
+		Media.DisplayMessage("The first team to get " .. points_to_win .. " points wins! ")
 	end
 
-	Media.DisplayMessage("Debug: Team1 ID: " .. Team1ID)
-	Media.DisplayMessage("Debug: Team2 ID: " .. Team2ID)
+	-- Media.DisplayMessage("Debug: Team1 ID: " .. Team1ID)
+	-- Media.DisplayMessage("Debug: Team2 ID: " .. Team2ID)
 
 	-- Triggers for oil derricks
-	for key, actor in pairs(all_oil_derricks) do
+	-- for key, actor in pairs(all_oil_derricks) do
+	Utils.Do(all_oil_derricks, function(actor)
 		Trigger.OnCapture(actor, function(self, captor, oldOwner, newOwner)
 			if newOwner.Team == 0 then
 				Media.DisplayMessage(newOwner.Name .. " captured an oil derrick!")
@@ -209,7 +217,7 @@ WorldLoaded = function()
 			end
 		end)
 
-	end
+	end)
 
 	-- If all oil derricks are killed. Team with most points wins.
 	Trigger.OnAllKilled(all_oil_derricks, function()
@@ -263,10 +271,10 @@ Tick = function()
 		team2_points = team2_points + round_decimals(round_decimals(team2_controls / count_oil_derricks, 1) * 1.5, 1)
 
 		-- Check if we have a winner.
-		if team1_points >= points_to_win then
+		if round_decimals(team1_points, 0) >= points_to_win then
 			-- Media.DisplayMessage("Congratulations to Team " .. Team1ID .. "!")
 			set_winner_team(Team1ID)
-		elseif team2_points >= points_to_win then
+		elseif round_decimals(team2_points, 0) >= points_to_win then
 			-- Media.DisplayMessage("Congratulations to Team " .. Team2ID .. "!")
 			set_winner_team(Team2ID)
 		end
@@ -285,10 +293,10 @@ Tick = function()
 					team2player_name = player.Name
 					-- Media.DisplayMessage("Debug: Get player2 name: " .. team2player_name)
 				end
-				Media.DisplayMessage("STATUS: " .. team1player_name .. ": " .. team1_points .. "/" .. points_to_win .. " points | " .. team2player_name .. ": " .. team2_points .. "/" .. points_to_win .. " points.")
+				Media.DisplayMessage("STATUS: " .. team1player_name .. ": " .. round_decimals(team1_points, 0) .. "/" .. points_to_win .. " points | " .. team2player_name .. ": " .. round_decimals(team2_points, 0) .. "/" .. points_to_win .. " points.")
 			else
 				-- Teams (over 2 players)
-				Media.DisplayMessage("STATUS: Team " .. Team1ID .. ": " .. team1_points .. "/" .. points_to_win .. " points | Team " .. Team2ID .. ": " .. team2_points .. "/" .. points_to_win .. " points.")
+				Media.DisplayMessage("STATUS: Team " .. Team1ID .. ": " .. round_decimals(team1_points, 0) .. "/" .. points_to_win .. " points | Team " .. Team2ID .. ": " .. round_decimals(team2_points, 0) .. "/" .. points_to_win .. " points.")
 			end
 		end
 
