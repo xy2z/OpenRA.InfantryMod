@@ -165,8 +165,23 @@ WorldLoaded = function()
 		end
 	end
 
-	-- Show how many points it takes to win.
-	points_to_win = count_players * 15
+	-- Set points to win
+	points_to_win = 30 -- 1v1
+	if count_players >= 10 then
+		-- 5v5 or more.
+		points_to_win = 50
+	elseif count_players >= 8 then
+		-- 4v4
+		points_to_win = 45
+	elseif count_players >= 6 then
+		-- 3v3
+		points_to_win = 40
+	elseif count_players >= 4 then
+		-- 2v2
+		points_to_win = 35
+	end
+
+	-- Show points to win
 	if count_players == 2 then
 		Media.DisplayMessage("The first player to get " .. points_to_win .. " points wins! ")
 	else
