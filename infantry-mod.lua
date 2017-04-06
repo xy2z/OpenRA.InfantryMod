@@ -79,7 +79,7 @@ WorldLoaded = function()
 	count_oil_derricks = 0
 	-- for key, oil in pairs(all_oil_derricks) do
 	Utils.Do(all_oil_derricks, function(actor)
-		Media.DisplayMessage("Found oil derrick")
+		-- Media.DisplayMessage("Found oil derrick")
 		count_oil_derricks = count_oil_derricks + 1
 	end)
 

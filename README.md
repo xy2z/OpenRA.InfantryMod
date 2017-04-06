@@ -1,7 +1,8 @@
 # InfantryMod
 
 This mod is currently in BETA - please send some feedback to me if you're testing it.
-Catch me on Discord, in game, forums or email. Thanks.
+Catch me on Discord, ingame, forums or email. Thanks.
+Get the map here (coming soon)
 
 ## About
 (See a video on YouTube)
@@ -16,11 +17,11 @@ This currently works on OpenRA version 20161019.
 ## Maps
 See a list of all infantry mod maps on the resource center (link).
 
-## Rules 
+## Rules
 - No MCV. Only barracks.
 - All infantry is available. Default price.
 - Barracks health is set to XX (XX original)
-- Oil derricks health is 4x higher than default? 
+- Oil derricks health is 4x higher than default?
 - Super Weapons: parabombs, paradrops and spy plane.
 - First team to get XX points wins.
 - Capturing an oil derricks gives $50 and then $25 every few seconds.
@@ -32,7 +33,7 @@ This mod is very simple to add to your own map.
 1. Set the `Categories` to `Infantry` in `map.yaml`.
 1. Add this code to the bottom of your `map.yaml` file
 ```
-CODE HERE.
+Rules: infantry-rules.yaml
 ```
 1. Zip your map including the `infantry-rules.yaml` and `infantrymod.lua`
 1. Play
@@ -53,5 +54,5 @@ To win you need to get (number of players) x 15 points.
 ## Contribute
 Feel free to create a pull request.
 
-## Bugs & Features 
-Found a bug? Got a great idea for a feature ? [Create an issue here](https://github.com/xy2z/OpenRA.InfantryMod/issues/new).
+## Bugs & Features
+Found a bug? Got an idea for a feature? [Create an issue here](https://github.com/xy2z/OpenRA.InfantryMod/issues/new).
