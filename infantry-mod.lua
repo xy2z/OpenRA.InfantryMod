@@ -15,6 +15,7 @@ objective_oil = {}
 count_players = 0
 count_teams = 0
 game_completed = false
+dead_players = {}
 
 Team1ID = nil
 Team1Players = {}
@@ -31,7 +32,8 @@ all_oil_derricks = {}
 
 -- Custom functions
 function set_winner_team(team_id)
-	Media.DisplayMessage("Congratulations to Team " .. Team2ID)
+	game_completed = true
+	Media.DisplayMessage("Congratulations to Team " .. team_id)
 	if team_id == Team1ID then
 		winner_team_players = Team1Players
 	else
@@ -75,6 +77,7 @@ WorldLoaded = function()
 	-- Get all oil derricks
 	neutral_player = Player.GetPlayer('Neutral')
 	all_oil_derricks = neutral_player.GetActorsByType('oilb')
+
 	-- all_oil_derricks = { Actor11, Actor15, Actor18, Actor19, Actor20, Actor32, Actor38 }
 	count_oil_derricks = 0
 	-- for key, oil in pairs(all_oil_derricks) do
@@ -191,6 +194,55 @@ WorldLoaded = function()
 	-- Media.DisplayMessage("Debug: Team1 ID: " .. Team1ID)
 	-- Media.DisplayMessage("Debug: Team2 ID: " .. Team2ID)
 
+	-- Trigger for when barracks is killed/captured.
+	all_barracks = {}
+	Utils.Do(players, function(player)
+		if not player.IsNonCombatant then
+			-- all_barracks[player.InternalName] = player.GetActorsByType('barr')
+			tent = player.GetActorsByType('tent')
+			-- Media.DisplayMessage("DEBUG: Loaded barracks from player: " .. player.InternalName)
+
+			-- When barracks is destroyed or captured, or player surrendered.
+			Trigger.OnAllKilledOrCaptured(tent, function()
+				if game_completed then
+					do return end
+				end
+
+				-- Media.DisplayMessage('DEBUG: OnAllKilledOrCaptured from ' .. player.InternalName)
+
+				-- player.alive = false
+				dead_players[player.InternalName] = true
+
+				-- Get the players team players and check if all are dead.
+				all_players_in_team_dead = true
+				if count_players > 2 then
+					Utils.Do(players, function(team_player)
+						if not team_player.IsNonCombatant and team_player.Team == player.Team and not dead_players[team_player.InternalName] then
+							all_players_in_team_dead = false
+							-- Media.DisplayMessage("Debug: Team is not dead yet! Player is still alive: " .. team_player.Name)
+						end
+					end)
+				end
+
+				-- All players in the team are dead.
+				if all_players_in_team_dead then
+					-- Opposite team wins.
+					winner_team_id = 0
+
+					if player.Team == Team1ID then
+						winner_team_id = Team2ID
+					else
+						winner_team_id = Team1ID
+					end
+
+					set_winner_team(winner_team_id)
+				end
+			end)
+
+		end
+	end)
+
+
 	-- Triggers for oil derricks
 	-- for key, actor in pairs(all_oil_derricks) do
 	Utils.Do(all_oil_derricks, function(actor)
@@ -203,13 +255,13 @@ WorldLoaded = function()
 
 			-- if newOwner.Team == Team1ID then
 			if Team1Players[newOwner.InternalName] then
-				-- Team 1
+				-- Team 1 captured it.
 				team1_controls = team1_controls + 1
 				if Team2Players[oldOwner.InternalName] then
 					team2_controls = team2_controls - 1
 				end
 			else
-				-- Team 2
+				-- Team 2 captured it.
 				team2_controls = team2_controls + 1
 				if Team1Players[oldOwner.InternalName] then
 					team1_controls = team1_controls - 1
@@ -217,18 +269,29 @@ WorldLoaded = function()
 			end
 		end)
 
+		-- Oil derrick destroyed
 		Trigger.OnKilled(actor, function(self, killer)
 			if game_completed then
 				do return end
 			end
+
 			Media.DisplayMessage("An oil derrick has been destroyed!")
+
+			if self.Owner.InternalName == 'Neutral' then
+				-- Media.DisplayMessage("DEBUG: Oil derrick was not controlled by anyone!")
+				do return end
+			end
+
+
 			-- Minus 1 control point for the team who controlled the oil derrick.
 			-- if self.Owner.Team == Team1ID then
 			if Team1Players[self.Owner.InternalName] then
 				-- Team 1 lost an oil derrick.
+				-- Media.DisplayMessage("DEBUG: Oil derrick was controlled by " .. Team1ID)
 				team1_controls = team1_controls - 1
 			else
 				-- Team 2 lost an oil derrick.
+				-- Media.DisplayMessage("DEBUG: Oil derrick was controlled by " .. Team2ID)
 				team2_controls = team2_controls - 1
 			end
 		end)
@@ -237,16 +300,24 @@ WorldLoaded = function()
 
 	-- If all oil derricks are killed. Team with most points wins.
 	Trigger.OnAllKilled(all_oil_derricks, function()
+		if game_completed then
+			do return end
+		end
+
 		Media.DisplayMessage("All oil derricks have been destroyed! Team with most points wins.")
+		-- Media.DisplayMessage("DEBUG: team1: " .. team1_points .. " and team2: " .. team2_points)
 		if team1_points == team2_points then
-			Media.DisplayMessage("It's a draw! Points are equal.")
-			-- Kill team that doesn't exist so all other teams wins. TODO: Test!
-			-- kill_team(99)
+			-- Media.DisplayMessage("It's a draw! Points are equal.")
+			for key, player in pairs(players) do
+				if not player.IsNonCombatant then
+					player.MarkFailedObjective(objective_oil[player.InternalName])
+				end
+			end
 		elseif team1_points > team2_points then
-			-- Media.DisplayMessage("Team " .. Team1ID .. " wins with " .. team1_points .. " points! Congratulations!")
+			-- Media.DisplayMessage("DEBUG: Team " .. Team1ID .. " wins with " .. team1_points .. " points! Congratulations! Team1ID")
 			set_winner_team(Team1ID)
 		else
-			-- Media.DisplayMessage("Team " .. Team2ID .. " wins with " .. team2_points .. " points! Congratulations!")
+			-- Media.DisplayMessage("DEBUG: Team " .. Team2ID .. " wins with " .. team2_points .. " points! Congratulations! Team2ID")
 			set_winner_team(Team2ID)
 		end
 
@@ -285,6 +356,7 @@ Tick = function()
 		-- Give points
 		team1_points = team1_points + round_decimals(round_decimals(team1_controls / count_oil_derricks, 1) * 1.5, 1)
 		team2_points = team2_points + round_decimals(round_decimals(team2_controls / count_oil_derricks, 1) * 1.5, 1)
+		-- Media.DisplayMessage("team1_points: " .. team1_points .. " AND team2_points: " .. team2_points)
 
 		-- Check if we have a winner.
 		if round_decimals(team1_points, 0) >= points_to_win then
