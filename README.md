@@ -1,11 +1,11 @@
 # InfantryMod
 
-This mod is currently in BETA - please send some feedback to me if you're testing it.
-Catch me on Discord, ingame, forums or email. Thanks.
-Get the map here (coming soon)
+This mod is currently in BETA - please send some feedback if you're testing it.
+[Get the map here](http://resource.openra.net/maps/20593/)
+
+![Image](http://i.imgur.com/0mdgC2z.png)
 
 ## About
-(See a video on YouTube)
 This is a mod for __maps__ in [OpenRA](http://www.openra.net): Red Alert.
 
 Only infantry is available in this mod, along with a couple super weapons such as paradrops.
@@ -15,7 +15,7 @@ The goal is to capture and control as many oil derricks as possible, until a tea
 This currently works on OpenRA version **20161019**.
 
 ## Maps
-See a list of all infantry mod maps on the resource center (link).
+[See a list of all InfantryMod maps on the resource center](http://resource.openra.net/maps/?category=Infantry&sort_by=latest&with_problems=show&players=).
 
 ## Rules
 - No MCV. Only barracks.
@@ -35,14 +35,14 @@ This mod is very simple to add to your own map.
 ```
 Rules: infantry-rules.yaml
 ```
-1. Zip your map including the `infantry-rules.yaml` and `infantrymod.lua`
+1. Zip your .oramap including the `infantry-rules.yaml` and `infantrymod.lua`
 1. Play
 
 Doesn't work? [Get help here](https://github.com/xy2z/OpenRA.InfantryMod/wiki/Troubleshooting)
 
 __Remember to:__
-- Add your map to the resource center (link) with the tag "Infantry".
-- Check in on new releases to the mod and update your map with fixes and new features.
+- Add your map to the [Resource center](http://resource.openra.net/upload/map/).
+- Check in on new releases of the mod, and update your map with fixes and new features.
 
 ## Points
 To win you need to get (number of players) x 15 points.
