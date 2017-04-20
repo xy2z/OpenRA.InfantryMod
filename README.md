@@ -20,12 +20,11 @@ This currently works on OpenRA version **20161019**.
 ## Rules
 - No MCV. Only barracks.
 - All infantry is available. Default price.
-- Barracks health is set to XX (XX original)
-- Oil derricks health is 4x higher than default?
+- Barracks health is set to 8000 (up from 600)
+- Oil derricks health is 20000 (up from 1000)
 - Super Weapons: parabombs, paradrops and spy plane.
-- First team to get XX points wins.
+- Get points by capturing and controlling oil derricks. (see Points below)
 - Capturing an oil derricks gives $50 and then $25 every few seconds.
-- The more oil derricks you control the more points to get.
 
 ## Make your own map
 This mod is very simple to add to your own map.
@@ -45,11 +44,12 @@ __Remember to:__
 - Check in on new releases of the mod, and update your map with fixes and new features.
 
 ## Points
-To win you need to get (number of players) x 15 points.
+To win you need to get these points:
 - 2 players: 30
-- 4 players: 60
-- 6 players: 90
-- and so on...
+- 4 players: 35
+- 6 players: 40
+- 8 players: 45
+- 10 players or more: 50
 
 ## Contribute
 Feel free to create a pull request.
