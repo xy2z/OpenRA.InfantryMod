@@ -31,7 +31,7 @@ This mod is very simple to add to your own map.
 1. Create a map with oil derricks
 1. Set the `Categories` to `Infantry` in `map.yaml`.
 1. Add this code to the bottom of your `map.yaml` file
-```
+```yaml
 Rules: infantry-rules.yaml
 ```
 1. Zip your .oramap including the `infantry-rules.yaml` and `infantrymod.lua`
