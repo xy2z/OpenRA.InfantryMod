@@ -47,23 +47,24 @@ SPY.England:
 	Buildable:
 		Prerequisites: ~tent
 
-
 OILB:
 	Health:
 		HP: 20000
 	CashTrickler:
-		Period: 400
+		Interval: 400
 		Amount: 25
-		CaptureAmount: 50
+	GivesCashOnCapture:
+		Amount: 50
 
 TENT:
 	Power:
 		Amount: 2500
 	CashTrickler:
-		Period: 350
+		Interval: 350
 		Amount: 100
 		ShowTicks: True
 	ProvidesRadar:
+		RequiresCondition: !disabled
 	-Sellable:
 	Health:
 		HP: 8000
@@ -82,6 +83,9 @@ TENT:
 		QuantizedFacings: 8
 		DisplayBeacon: true
 		BeaconPoster: camicon
+		ArrowSequence: arrow
+		CircleSequence: circles
+		ClockSequence: clock
 	ParatroopersPower@paratroopers:
 		OrderName: SovietParatroopers
 		Prerequisites: tent
@@ -96,6 +100,9 @@ TENT:
 		CameraActor: camera.paradrop
 		DisplayBeacon: true
 		BeaconPoster: pinficon
+		ArrowSequence: arrow
+		CircleSequence: circles
+		ClockSequence: clock
 	AirstrikePower@parabombs:
 		OrderName: UkraineParabombs
 		Prerequisites: tent
@@ -112,6 +119,11 @@ TENT:
 		BeaconPoster: pbmbicon
 		SquadSize: 3
 		SquadOffset: 1792,1792,0
+		ArrowSequence: arrow
+		CircleSequence: circles
+		ClockSequence: clock
+	GrantConditionOnDisabled@IDISABLE:
+		Condition: disabled
 
 PBOX:
 	Health:

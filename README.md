@@ -12,7 +12,7 @@ Only infantry is available in this mod, along with a couple super weapons such a
 
 The goal is to capture and control as many oil derricks as possible, until a team reaches the winning points.
 
-This currently works on OpenRA version **20161019**.
+This currently works on OpenRA version **20170421**.
 
 ## Maps
 [See a list of all InfantryMod maps on the resource center](http://resource.openra.net/maps/?category=Infantry&sort_by=latest&with_problems=show&players=).
